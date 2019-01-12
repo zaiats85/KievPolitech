@@ -16,10 +16,7 @@ float D;
 /* Represent calculation f(x) = 2*cos(a^b) + | arccos(-√c/d) | */
 int main() {
 
-    scanf("%f", &A);
-    scanf("%f", &B);
-    scanf("%f", &C);
-    scanf("%f", &D);
+    scanf("%f %f %f %f", &A, &B, &C, &D);
 
     /*arccos(x) = y; cos(y) = x; 0 < = y <= П, |x|<=1;*/
     float argument = -sqrt(C/D);
