@@ -1,0 +1,15 @@
+{
+  "name": "kiev-polytech-hash_tables",
+  "version": "1.0.0",
+  "description": "Describing Data Structures",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "string-hash": "^1.1.3"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "oleg_zaiats",
+  "license": "ISC"
+}

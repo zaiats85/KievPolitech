@@ -1,6 +1,9 @@
 #IDE
 .idea/
 
+Lab_1/.idea
+Lab_example/.idea
+
 # Prerequisites
 *.d
 
