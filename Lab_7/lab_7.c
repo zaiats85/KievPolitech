@@ -10,9 +10,9 @@ void formMatrix(int *mat, int size);
 void printMatrix(int *mat, int size);
 void isEvenLine(int *mat, int size);
 
-void isMonoAscOrDesc(int mat[][MAX], int size);
-bool isMonoAsc(int arr[], int size);
-bool isMonoDesc(int arr[], int size);
+void isMonoAscOrDesc(int *mat, int size);
+bool isMonoAsc(int *arr, int size);
+bool isMonoDesc(int *arr, int size);
 
 int main()
 {
@@ -29,7 +29,7 @@ int main()
     printMatrix((int *)ptr, N);
 
     isEvenLine((int *)ptr, N);
-    isMonoAscOrDesc(mat, N);
+    isMonoAscOrDesc((int *)ptr, N);
 
     return 0;
 }
@@ -111,11 +111,17 @@ void isEvenLine(int *mat, int size) {
  * @size    length of matrix
  * @matrix    2 dimentional matrix blueprint.
  */
-void isMonoAscOrDesc(int mat[][MAX], int size) {
+void isMonoAscOrDesc(int *mat, int size) {
     int j, i;
     bool flag;
+    int *line;
+
     for(i = 0; i < size; i++) {
-        flag = isMonoAsc(mat[i], size) || isMonoDesc(mat[i], size);
+
+        /*Pointer Ariphmetics*/
+        line = mat + i*size;
+
+        flag = isMonoAsc((int *)line, size) || isMonoDesc((int *)line, size);
         printf("%d line contains", i);
         printf("%s\n", flag ? " mono sequence" : " not mono sequence");
     }
@@ -127,12 +133,13 @@ void isMonoAscOrDesc(int mat[][MAX], int size) {
  * @line    single dimensional array repsenting line
  */
 
-bool isMonoAsc(int line[], int size) {
+bool isMonoAsc(int *line, int size) {
     int i = 0;
     bool flag;
 
     while(i < (size - 1) ) {
-        if(line[i] > line[i+1]){
+
+        if( *(line + i) > *(line + i + 1)) {
             flag = false;
             break;
         }
@@ -149,12 +156,12 @@ bool isMonoAsc(int line[], int size) {
  * @size    length of matrix
  * @line    single dimensional array repsenting line
  */
-bool isMonoDesc(int line[], int size) {
+bool isMonoDesc(int *line, int size) {
     int i = 0;
     bool flag;
 
     while(i < (size - 1)){
-        if(line[i] < line[i+1]){
+        if(*(line + i) < *(line + i + 1)){
             flag = false;
             break;
         }
