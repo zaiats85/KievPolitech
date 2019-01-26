@@ -1,132 +1,64 @@
+/**
+ * C program to check alphabet, digit or special character using ASCII value
+ */
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 #include <stdlib.h>
 
-int main(void) {
+bool isLetter(char ch);
+char *inputString(FILE* fp, size_t size);
 
-    // integer variables
-    int N = 0;
-    int sum = 0;
-    int i;
+int main(void){
+    char *words;
+    int letters = 0;
+    int nonLetters = 0;
 
-    // integer pointer variables
-    int *iptr, *tmp;
+    printf("Enter a string, and I ll count letters and non letters for u : ");
+    words = inputString(stdin, 10);
 
-    // take user input
-    printf("Enter value of N [1-10]: ");
-    scanf("%d", &N);
+    /*invariant*/
+    int n = strlen(words);
 
-    // allocate memory
-    iptr = (int *) malloc (N * sizeof(int));
+    /*calc symbols*/
+    for (int i = 0; i < n; i++)
+        isLetter(words[i]) ? letters++ : nonLetters++;
 
-    // check if memory allocated
-    if (iptr == NULL) {
-        printf("Unable to allocate memory space. Program terminated.\n");
-        return -1;
-    }
+    /*output*/
+    printf("\n Amount of letters %d\n Amount of non letters %d\n", letters, nonLetters);
 
+    printf("%s\n", words);
 
-    // take integers
-    printf("Enter %d integer number(s)\n", N);
-    for (i = 0, tmp = iptr; i < N; i++, tmp++) {
-        printf("Enter #%d: ", (i+1));
-        scanf("%d", tmp);
-
-        // compute the sum
-        sum += *tmp;
-    }
-
-    // display result
-    printf("Sum: %d\n", sum);
-
-    // free memory location
-    free(iptr);
-
+    free(words);
     return 0;
 }
 
-/*
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+bool isLetter (char ch) {
+    return ((ch >= 97 && ch <= 122) || (ch >= 65 && ch <= 90));
+}
 
-#define MAX_LEN         20  */
-/* words maximum count *//*
+char *inputString(FILE* fp, size_t size) {
+//The size is extended by the input with the value of the provisional
+    char *str;
+    int ch;
+    size_t len = 0;
 
-#define MAX_CHARS       20  */
-/* chars maximum length *//*
+    //size is start size
+    str = realloc(NULL, sizeof(char)*size);
+    if(!str) return str;
 
-#define MAX_WORDLEN     20  */
-/* word maximum length *//*
+    while(EOF!=(ch=fgetc(fp)) && ch != '\n'){
+        str[len++]=ch;
 
-
-int main(int argc, char *argv[]) {
-
-    */
-/*Declaration*//*
-
-    int i, j, count, len[MAX_WORDLEN];
-
-    */
-/*Initialization*//*
-
-    i = 0;
-    j = 0;
-    count = 0;
-
-    char words[MAX_LEN][MAX_WORDLEN];
-    FILE *fp = NULL;
-
-    fp = fopen(argv[1], "r");
-
-    if (!fp) {
-        printf("Can't open the file provided\n");
-        return 0;
-    }
-
-    */
-/* read words from file to array *//*
-
-    while (i < MAX_LEN && (fscanf(fp, "%s", words[i++]) != EOF));
-
-    */
-/* count words *//*
-
-    count = i - 1;
-
-    printf("WORDS: ");
-    for (i = 0; i < count; ++i)
-    {
-        printf("%s, ", words[i]);
-    }
-
-    printf("\n\n");
-
-    memset(len, 0, sizeof(int) * MAX_WORDLEN);
-
-    */
-/* count words length *//*
-
-    for (i = 0; i < count; ++i)
-    {
-        len[strlen(words[i])]++;
-    }
-
-    */
-/* result *//*
-
-    for (i = 0; i < MAX_WORDLEN; ++i)
-    {
-
-        if(len[i]){
-            printf("%d: ", i);
-            for (j = 0; j < len[i]; ++j)
-                printf("+");
-            printf("\n");
+        /* Give me more space if exceeding */
+        if(len==size){
+            str = realloc(str, sizeof(char)*(size+=16));
+            if(!str) return str;
         }
-
     }
 
-    printf("\n");
+    /*end of input*/
+    str[len++]='\0';
 
-    return 0;
-}*/
+    return realloc(str, sizeof(char)*len);
+}
